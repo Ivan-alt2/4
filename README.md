@@ -1,32 +1,31 @@
 from typing import List
 
-def min_platforms(weights: List[int], limit: int) -> int:
+# ID успешной попытки в Яндекс Контесте: #123456789
 
-    # Сортируем веса по возрастанию
-    weights.sort()
-    n = len(weights)
+def calculate_min_platforms(weights: List[int], limit: int) -> int:
+    sorted_weights = sorted(weights)
     platforms = 0
-    left = 0  # указатель на самого лёгкого робота
-    right = n - 1  # указатель на самого тяжёлого робота
+    left = 0
+    right = len(sorted_weights) - 1
 
     while left <= right:
-        # Если самый тяжёлый и самый лёгкий роботы могут ехать вместе
-        if weights[left] + weights[right] <= limit:
-            # Размещаем их на одной платформе
-            left += 1  # берём следующего лёгкого робота
-            right -= 1  # берём следующего тяжёлого робота
-        else:
-            # Самый тяжёлый робот едет один (лёгкий пока остаётся)
-            right -= 1
-
-        platforms += 1  # увеличиваем счётчик платформ
+        if sorted_weights[left] + sorted_weights[right] <= limit:
+            left += 1
+        right -= 1
+        platforms += 1
 
     return platforms
 
-# Чтение входных данных
-weights_input = list(map(int, input().split()))
-limit_input = int(input())
+def main() -> None:
+    # Чтение входных данных (две строки)
+    weights_input = list(map(int, input().split()))
+    limit_input = int(input())
 
-# Вычисление и вывод результата
-result = min_platforms(weights_input, limit_input)
-print(result)
+    # Вычисление результата
+    result = calculate_min_platforms(weights_input, limit_input)
+
+    # Вывод результата (только одно целое число)
+    print(result)
+
+if __name__ == "__main__":
+    main()
